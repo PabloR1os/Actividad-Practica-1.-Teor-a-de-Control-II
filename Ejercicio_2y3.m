@@ -18,7 +18,7 @@ idx0 = find(abs(du) > 5,1);
 t0 = t(idx0);
 
 % 3. Definimos los puntos t1, 2t1, 3t1.
-t1 = t0 + 0.002; %es un tiempo muy pequeño despues de la entrada escalon
+t1 = t0 + 0.002; %es un tiempo muy pequeÃ±o despues de la entrada escalon
 [~, i1] = min(abs(t - t1));
 [~, i2] = min(abs(t-(t0+2*(t1-t0))));
 [~, i3] = min(abs(t-(t0+3*(t1-t0))));
@@ -43,9 +43,9 @@ alfa2 = (k1*k2 + k3 + sqrt(be)) / (2*(k1^2 + k2));
 T1 = -(t1 - t0)/log(alfa1);
 T2 = -(t1 - t0)/log(alfa2);
 fprintf('T1 = %.6f s\n', T1);
-T1 = 0.005103 s
+
 fprintf('T2 = %.6f s\n', T2);
-T2 = 0.043209 s
+
 % 6. Definimos la FT
 
 num = [1];
@@ -60,7 +60,7 @@ dVc_dt = diff(y_model)/dt;
 t_der = t(1:end-1);
 C = max(I)/max(dVc_dt);
 fprintf('Capacitancia estimada: %.6e F\n',C);
-Capacitancia estimada: 2.197493e-04 F
+
 
 % 9. Hacemos una estimacion de la corriente
 i_model = C*dVc_dt;
@@ -76,9 +76,6 @@ fprintf('\nParametros estimados:\n');
 fprintf('R = %.2f Ohm\n', R);
 fprintf('L = %.6f H\n', L);
 
-Parametros estimados:
-R = 4550.64 Ohm
-L = 20.770885 H
 % 11. Validacion (desde 0.05s)
 idx_val = t_der >=0.05;
 figure;
