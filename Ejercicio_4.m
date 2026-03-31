@@ -3,7 +3,7 @@
 % Sistema de tres variables de estado 
 % Item 4
 
-%1. Par·metros a usar
+%1. Par√°metros a usar
 Laa = 366e-6;
 J = 5e-9;
 Ra = 55.6;
@@ -25,7 +25,7 @@ N=length(t);
 
 TL_values = [0.9*TL_max, TL_max, 1.1*TL_max];
 
-colores = ['b','r','g'];   % <-- AGREGADO
+colores = ['b','r','g']; 
 
 figure;
 
@@ -35,7 +35,7 @@ TL = TL_values(j);
 ia=zeros(1,N);
 w=zeros(1,N);
 
-%AquÌ empezamos a aplicar Euler
+%Aqu√≠ empezamos a aplicar Euler
 for k=1:N-1
     dia = (-Ra/Laa)*ia(k) - (Km/Laa)*w(k) + (1/Laa)*Va;
     dw = (Ki/J)*ia(k) - (B/J)*w(k) - (1/J)*TL;
@@ -46,14 +46,14 @@ end
 
 %4. Graficamos
 subplot(2,1,1)
-plot(t, ia, colores(j), 'LineWidth',1.5)   % <-- CAMBIO
+plot(t, ia, colores(j), 'LineWidth',1.5)
 hold on
 title('Corriente i_a(t)')
 ylabel('Corriente [A]')
 grid on
 
 subplot(2,1,2)
-plot(t, w, colores(j), 'LineWidth',1.5)    % <-- CAMBIO
+plot(t, w, colores(j), 'LineWidth',1.5)
 hold on
 title('Velocidad angular \omega_r(t)')
 ylabel('Velocidad [rad/s]')
