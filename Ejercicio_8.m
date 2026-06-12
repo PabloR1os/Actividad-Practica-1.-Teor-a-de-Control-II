@@ -1,7 +1,7 @@
 % TP 1 - Teoria de Control II
 % Caso de estudio 2 - Item 8
 
-% 1. Definicion de los parámetros a usar
+% 1. Definicion de los parÃ¡metros a usar
 L = 366e-6;
 J = 5e-9;
 R = 55.6;
@@ -24,7 +24,7 @@ K = [0.01  0.001  50];
 
 O = [1000; 10000; 500]; %Este es el observador y se puede ajustar como se desee
 
-% 2. Establecemos la etapa de simulación.
+% 2. Establecemos la etapa de simulaciÃ³n.
 dt=1e-5;
 t_final=100;
 t=0:dt:t_final;
@@ -50,7 +50,7 @@ for k=1:N
     end
 end
 
-%4. Simulamos y graáficamos los resultados obtenidos
+%4. Simulamos y graÃ¡ficamos los resultados obtenidos
 for k=1:N-1
     y=C*x(:,k); %corresponde a la salida real del sistema
     y_estim=C*x_estim(:,k); %corresponde a la salida que estimamos
@@ -67,13 +67,13 @@ figure;
 
 subplot(3,1,1)
 plot(t, x(3,:), 'b', t, x_estim(3,:), 'r--')
-title('Posición theta(t)')
+title('PosiciÃ³n \theta(t)')
 legend('Real','Estimado')
 grid on
 
 subplot(3,1,2)
 plot(t, x(2,:), 'b', t, x_estim(2,:), 'r--')
-title('Velocidad omega(t)')
+title('Velocidad \omega(t)')
 legend('Real','Estimado')
 grid on
 
