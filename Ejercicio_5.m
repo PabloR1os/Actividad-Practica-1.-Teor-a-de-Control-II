@@ -11,17 +11,16 @@ ia = datos(:,3);
 Va = datos(:,4);
 TL = datos(:,5);
 
-%% 2. Sincronización y puntos para el algoritmo de Chen cruzado
+%% 2. Sincronización y puntos para el algoritmo de Chen
 t0 = find(Va > 0, 1);
-% Se busca el tiempo de subida de la velocidad y se divide para definir el paso
 x = fix(find(w == max(w), 1, 'first') / 5);
 
 t1 = t0 + x;
 t2 = t0 + x * 2;
 t3 = t0 + x * 3;
 
-StepAmplitude = max(Va); % Amplitud del escalón de tensión (10V)
-M = [w, ia];            % Matriz con ambas señales para identificar en paralelo
+StepAmplitude = max(Va); 
+M = [w, ia];            
 
 % Inicialización de vectores para almacenar ganancias y constantes
 K = zeros(1, 2);
@@ -29,7 +28,7 @@ T1 = zeros(1, 2);
 T2 = zeros(1, 2);
 T3 = zeros(1, 2);
 
-%% 3. Identificación mediante el método de CHEN (Doble canal)
+%% 3. Identificación mediante el método de CHEN
 for k = 1:2
     K(k) = M(end, k) / StepAmplitude;
     
@@ -53,16 +52,16 @@ end
 G_w  = tf(K(1) * [T3(1), 1], conv([T1(1), 1], [T2(1), 1]));
 G_ia = tf(K(2) * [T3(2), 1], conv([T1(2), 1], [T2(2), 1]));
 
-% Validación con lsim (Simulación temporal)
+% Validación con lsim
 w_modelo  = lsim(G_w, Va, t);
 ia_modelo = lsim(G_ia, Va, t);
 
-%% 4. Ganancia estática ante la perturbación de Torque (T_L)
+%% 4. Ganancia estática ante la perturbación de Torque
 inicio_TL = find(TL > 0, 1);
 final_TL  = find(TL > 0, 1, 'last');
 k_tl = (w(inicio_TL) - w(final_TL)) / max(TL);
 
-%% 5. DEDUCCIÓN DE PARÁMETROS FÍSICOS DEL MOTOR (Fórmulas de la cátedra)
+%% 5. Calculo de los parámetros fisicos del motor
 Ra_calc  = (-T1(1) * T2(1) + T1(1) * T3(2) + T2(1) * T3(2)) / (K(2) * T3(2)^2);
 Laa_calc = (T1(1) * T2(1)) / (K(2) * T3(2));
 Km_calc  = (T1(1) * T2(1) + T3(2)^2 - T3(2) * (T1(1) + T2(1))) / (K(1) * T3(2)^2);
@@ -72,7 +71,7 @@ B_calc   = (K(2) * Ki_calc) / K(1);
 
 %% 6. RESULTADOS EN CONSOLA
 fprintf('\n==================================================\n');
-fprintf('RESULTADOS DE PARAMETROS IDENTIFICADOS (CHEN DOBLE)\n');
+fprintf('RESULTADOS DE PARAMETROS IDENTIFICADOS\n');
 fprintf('==================================================\n');
 fprintf('  Ra  = %.16f [Ohm]\n', Ra_calc);
 fprintf('  Laa = %.16f [H]\n', Laa_calc);
@@ -82,7 +81,7 @@ fprintf('  J   = %.16f [Kg*m^2]\n', J_calc);
 fprintf('  B   = %.16f [N*m*s/rad]\n', B_calc);
 fprintf('==================================================\n');
 
-%% 7. Graficamos los datos medidos y las validaciones (Metiendo tus subplots)
+%% 7. Graficamos los datos medidos y las validaciones
 figure('Name', 'Validacion de Modelos Identificados', 'NumberTitle', 'off')
 
 subplot(4,1,1)
